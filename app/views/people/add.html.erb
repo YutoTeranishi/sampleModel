@@ -1,5 +1,7 @@
 <h1 class="display-4 text-primary">People#add</h1>
 <p><%= @msg %></p>
+<!--ヘルパーを使わない記述-->
+<!--
 <%=form_tag(controller:'people',action:'add') %>
   <div class="form-grop">
     <label for="name">Name</label>
@@ -14,3 +16,19 @@
     <%= text_field_tag("mail","",{class:"form-control"}) %>
   </div>
   <input type="submit">
+-->
+<%= form_for(@person,url:{controller:'people',action:'create'}) do |form| %>
+<div class="form-grop">
+  <label for="name">Name</label>
+  <%= form.text_field(:name,class:"form-control") %>
+</div>
+<div class="form-grop">
+  <label for="age">Age</label>
+  <%= form.text_field(:age,class:"form-control") %>
+</div>
+<div class="form-grop">
+  <label for="mail">Mail</label>
+  <%= form.text_field(:mail,class:"form-control") %>
+</div>
+<%= form.submit class:"btn btn-primary" %>
+<% end %>
