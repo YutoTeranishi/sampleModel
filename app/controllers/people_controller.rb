@@ -57,21 +57,30 @@ class PeopleController < ApplicationController
 
       #whereを使った検索
       #@people = Person.where "age >= ?" , params[:find]
-      #複数検索
-=begin
+
+      #複数検索&&曖昧検索
+
+      f = Array.new
       if params[:find].to_s.include?(",") then
-        f = params[:find].split(',')
-      elsif params[:find].to_s.include?(" ") then
-        f = params[:find].split(' ')
-      else
-        f = params[:find].to_s
+        f = params[:find].split(",")
+      else params[:find].to_s.include?(" ")
+        f = params[:find].split(" ")
       end
-=end
+    #sをここで宣言しないとスコープがeach内のみになる
+    s = String.new
+    f.each do |obj_tmp|
+      obj = '\'%'+obj_tmp+'%\''
+      s += '(mail like ' +obj+ ' or name like '+obj+' or age like '+obj+')'
+
+      if f.last != obj_tmp then
+        s += ' or '
+      end
+    end
+    puts s
       #曖昧検索
       f = '%'+params[:find]+'%'
-      #f.each do |obj|
-        @people = Person.where "mail like ? or name like ? or age like ? " ,f,f,f
-      #end
+        #@people = Person.where "mail like ? or name like ? or age like ? " ,f,f,f
+        @people = Person.where s
     end
   end
 
