@@ -1,0 +1,26 @@
+<h1 class="display-4 text-primary">Messages#edit</h1>
+<p><%= @msg %></p>
+
+<% if @message.errors.any? %>
+<ul>
+  <% @message.errors.full_messages.each do |err| %>
+  <li><span style="color:red"><%= err %></span></li>
+  <% end %>
+</ul>
+<% end %>
+
+<%= form_for(@message,url:{controller:'messages',action:'update'}) do |form| %>
+<div class="form-grop">
+  <label for="person_id">person ID</label>
+  <%= form.text_field(:person_id,class:"form-control") %>
+</div>
+<div class="form-grop">
+  <label for="title">title</label>
+  <%= form.text_field(:title,class:"form-control") %>
+</div>
+<div class="form-grop">
+  <label for="message">message</label>
+  <%= form.text_area(:message,class:"form-control") %>
+</div>
+<%= form.submit "更新" %>
+<% end %>

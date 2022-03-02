@@ -1,0 +1,24 @@
+<h1 class="display-4 text-primary">Messages#show</h1>
+<p><%= @msg %></p>
+<table class="table">
+  <tr>
+    <th>Id</th>
+    <td><%= @message.id %></td>
+  </tr>
+  <tr>
+    <th>person</th>
+    <td><%=@message.person_id%></td>
+  </tr>
+  <tr>
+    <th>title</th>
+    <td><%=@message.title%></td>
+  </tr>
+  <tr>
+    <th>message</th>
+    <td><%=@message.message%></td>
+  </tr>
+  <tr>
+    <th>created</th>
+    <td><%=@message.created_at%></td>
+  </tr>
+</table>
