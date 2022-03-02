@@ -14,19 +14,28 @@ class PeopleController < ApplicationController
     @person = Person.new
   end
   def create
+=begin
     if request.post? then
       Person.create(person_params)
-
-=begin [行の先頭にしないと機能しない]
-      obj = Person.create(
-        name: params['name'],
-        age:params['age'],
-        mail:params['mail']
-      )
-=end
     end
-    redirect_to '/people'
+=end
+  @person = Person.new(person_params)
+    if @person.save then
+      redirect_to '/people'
+    else
+=begin
+      re = ''
+      @person.errors.messages.each do |key,vals|
+        vals.each do |val|
+          re +='<span style="color:red">' + key.to_s + '</span> ' + val + '<br>'
+        end
+      end
+      @msg = re.html_safe
+=end
+      render 'add'
+    end
   end
+
   def edit
     @msg = "edit data.[id = " + params[:id] + "]"
     @person = Person.find(params[:id])
@@ -76,9 +85,10 @@ class PeopleController < ApplicationController
         s += ' or '
       end
     end
-    puts s
+    #デバック用
+    # puts s
       #曖昧検索
-      f = '%'+params[:find]+'%'
+      #f = '%'+params[:find]+'%'
         #@people = Person.where "mail like ? or name like ? or age like ? " ,f,f,f
         @people = Person.where s
     end
